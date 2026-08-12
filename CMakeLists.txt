@@ -3,12 +3,14 @@ set(APP_NAME "esp_controller")
 add_executable(
     ${APP_NAME}
         "src/main.c"
+        src/device_handler.c
 )
 
 target_link_libraries(
     ${APP_NAME}
     PUBLIC
         blobmsg_json
+        serialport
         ubox
         ubus   
 )
