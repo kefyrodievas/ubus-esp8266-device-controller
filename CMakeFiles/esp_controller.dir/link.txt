@@ -1,0 +1,1 @@
+/usr/bin/cc -rdynamic CMakeFiles/esp_controller.dir/src/main.o CMakeFiles/esp_controller.dir/src/device_handler.o -o esp_controller  -lblobmsg_json -lserialport -lubox -lubus 

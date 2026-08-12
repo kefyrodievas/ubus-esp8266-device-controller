@@ -45,16 +45,18 @@ struct serial_port_list *get_device_port_list() {
             }
         }
     }
+    sp_free_port_list(port_list);
     return head;
 }
 
 int send_packet_to_device(struct sp_port *port, struct control_packet packet) {
     // port setup
-    if (sp_open(port, SP_MODE_WRITE) != SP_OK) {
+    if (sp_open(port, SP_MODE_READ_WRITE) != SP_OK) {
         printf("failed to open port\n");
         return -1;
     }
     if (sp_set_baudrate(port, 9600) != SP_OK) {
+        printf("failed to set baud rate\n");
         return -1;
     }
     if (sp_set_bits(port, 8) != SP_OK) {
@@ -70,28 +72,36 @@ int send_packet_to_device(struct sp_port *port, struct control_packet packet) {
         return -1;
     }
 
+    printf("setup successful\n");
+
     char *types[] = {
         "on", "off", "get"
     };
     // char message[80];
-    struct blob_buf buffer;
+    static struct blob_buf buffer;
     blobmsg_buf_init(&buffer);
+    // printf("meow\n");
     switch (packet.type) {
     case GET:
-        blobmsg_add_string(&buffer, "sensor", packet.sensor);
-        blobmsg_add_string(&buffer, "model", packet.model);
+        blobmsg_add_string(&buffer, "sensor", strdup(packet.sensor));
+        blobmsg_add_string(&buffer, "model", strdup(packet.model));
     case ON:
     case OFF:
-        blobmsg_add_string(&buffer, "action", types[packet.type]);
-        blobmsg_add_u8(&buffer, "pin", packet.pin);
+        blobmsg_add_string(&buffer, "action", strdup(types[packet.type]));
+        blobmsg_add_u16(&buffer, "pin", packet.pin);
         break;
     default:
         sp_close(port);
         return -2;
         break;
     }
+    // printf("meow\n");
     printf("%s\n", blobmsg_format_json(buffer.head, true));
-    sp_nonblocking_write(port, blobmsg_format_json(buffer.head, true), buffer.buflen);
+    sp_blocking_write(port, blobmsg_format_json(buffer.head, true), buffer.buflen, 1000);
+    char buf[113] = {};
+    sp_blocking_read(port, &buf, 113, 3000);
+    printf("%s", buf);
+
     // sp_blocking_write(, 1000);
     sp_close(port);
 }
