@@ -1,7 +1,0 @@
-/home/studentas/projects/ubus-esp8266-device-controller/CMakeFiles/esp_controller.dir
-/home/studentas/projects/ubus-esp8266-device-controller/CMakeFiles/edit_cache.dir
-/home/studentas/projects/ubus-esp8266-device-controller/CMakeFiles/rebuild_cache.dir
-/home/studentas/projects/ubus-esp8266-device-controller/CMakeFiles/list_install_components.dir
-/home/studentas/projects/ubus-esp8266-device-controller/CMakeFiles/install.dir
-/home/studentas/projects/ubus-esp8266-device-controller/CMakeFiles/install/local.dir
-/home/studentas/projects/ubus-esp8266-device-controller/CMakeFiles/install/strip.dir
