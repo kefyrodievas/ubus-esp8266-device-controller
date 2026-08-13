@@ -23,5 +23,6 @@ struct control_packet {
 
 struct serial_port_list *get_device_port_list();
 
-int send_packet_to_device(struct sp_port *port, struct control_packet packet);
+int send_packet_to_device(struct sp_port *port, struct control_packet packet, char **response);
 struct control_packet control_packet(enum packet_type type, uint8_t pin, char *sensor, char *model);
+void free_serial_port_list(struct serial_port_list *head);

@@ -4,6 +4,7 @@ add_executable(
     ${APP_NAME}
         "src/main.c"
         src/device_handler.c
+        src/ubus_func.c
 )
 
 target_link_libraries(
