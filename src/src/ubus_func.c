@@ -103,14 +103,15 @@ static int controller_off(struct ubus_context *ctx, struct ubus_object *obj,
     struct ubus_request_data *req, const char *method, struct blob_attr *msg) {
 
     struct blob_attr *tb[__SET_MODE_MAX];
-    static struct blob_buf buffer;
-    blob_buf_init(&buffer, 0);
+
 
     blobmsg_parse(set_mode_policy, __SET_MODE_MAX, tb, blob_data(msg), blob_len(msg));
 
     if (!tb[PORT_VALUE] || !tb[PIN_VALUE]) {
         return UBUS_STATUS_INVALID_ARGUMENT;
     }
+    static struct blob_buf buffer;
+    blob_buf_init(&buffer, 0);
 
     char *response;
     struct sp_port *port = NULL;
@@ -137,8 +138,7 @@ static int controller_get(struct ubus_context *ctx, struct ubus_object *obj,
     struct ubus_request_data *req, const char *method, struct blob_attr *msg) {
 
     struct blob_attr *tb[__GET_MODE_MAX];
-    static struct blob_buf buffer;
-    blob_buf_init(&buffer, 0);
+
 
     blobmsg_parse(get_policy, __GET_MODE_MAX, tb, blob_data(msg), blob_len(msg));
 
@@ -146,6 +146,8 @@ static int controller_get(struct ubus_context *ctx, struct ubus_object *obj,
         return UBUS_STATUS_INVALID_ARGUMENT;
     }
 
+    static struct blob_buf buffer;
+    blob_buf_init(&buffer, 0);
     char *response;
     struct sp_port *port = NULL;
     for (struct serial_port_list *curr = list; curr != NULL; curr = curr->next) {
