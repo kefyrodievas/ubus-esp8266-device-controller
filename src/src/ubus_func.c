@@ -67,14 +67,16 @@ static int controller_on(struct ubus_context *ctx, struct ubus_object *obj,
     struct ubus_request_data *req, const char *method, struct blob_attr *msg) {
 
     struct blob_attr *tb[__SET_MODE_MAX];
-    static struct blob_buf buffer;
-    blob_buf_init(&buffer, 0);
+
+
 
     blobmsg_parse(set_mode_policy, __SET_MODE_MAX, tb, blob_data(msg), blob_len(msg));
 
     if (!tb[PORT_VALUE] || !tb[PIN_VALUE]) {
         return UBUS_STATUS_INVALID_ARGUMENT;
     }
+    static struct blob_buf buffer;
+    blob_buf_init(&buffer, 0);
 
     char *response;
     struct sp_port *port = NULL;
