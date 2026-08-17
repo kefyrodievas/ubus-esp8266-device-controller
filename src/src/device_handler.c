@@ -89,7 +89,6 @@ int send_packet_to_device(struct sp_port *port, struct control_packet packet, ch
         return -2;
         break;
     }
-    // printf("%s\n", blobmsg_format_json(buffer.head, true));
 
     char *input = blobmsg_format_json(buffer.head, true);
     sp_nonblocking_write(port, input, buffer.buflen);

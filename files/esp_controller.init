@@ -1,0 +1,23 @@
+#!/bin/sh /etc/rc.common
+
+USE_PROCD=1
+START=95
+STOP=01
+
+start_service() {
+	        procd_open_instance
+	        procd_set_param command /usr/bin/esp_controller 
+	        procd_set_param pidfile /var/run/esp_controller.pid
+			# procd_set_param file /etc/config/tuyad
+        	procd_close_instance
+
+}
+
+service_triggers() {
+	procd_add_reload_trigger "esp_controller"
+}
+
+reload_service() {
+	stop
+	start
+}
